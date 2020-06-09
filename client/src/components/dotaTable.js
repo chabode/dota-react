@@ -35,6 +35,18 @@ class DotaTable extends Component{
     return winrate.toFixed(2)
   }
 
+  getHeroesDuration(value) {
+    const id = Number(value)
+    fetch(`https://api.opendota.com/api/heroes/${id}/durations`)
+    .then(response => response.json())
+    .then(duration => {
+      console.log(duration)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   render() {
     const { heroList } = this.state
     return (
@@ -48,6 +60,7 @@ class DotaTable extends Component{
                         <th>Type</th>
                         <th>Picture</th>
                         <th>Winrate</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +73,8 @@ class DotaTable extends Component{
                                 <td>{ hero.attack_type }</td>
                                 <td><img src={this.image_url(hero.icon)} alt="icon"></img> </td>
                                 <td>{ this.winrate(hero.pro_win, hero.pro_pick)}%</td>
+                                <td><button onClick={() => this.getHeroesDuration(hero.id)}
+                                className="btn btn-info">Duration Played</button> </td>
                             </tr>
                         )
                     })}
