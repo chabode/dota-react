@@ -23,16 +23,16 @@ class DotaTable extends Component{
   }
 
   componentDidMount() {
-      this.getHeroesList()
+    this.getHeroesList()
   }
 
   image_url(value) {
-      return 'https://api.opendota.com' + value
+    return 'https://api.opendota.com' + value
   }
 
   winrate(value1, value2) {
-      let winrate = value1/value2 * 100
-      return winrate.toFixed(2)
+    let winrate = value1/value2 * 100
+    return winrate.toFixed(2)
   }
 
   render() {
