@@ -1,10 +1,12 @@
 import React from 'react';
 import useDataFetch from '../hooks/dataFetch';
+import { useHistory } from 'react-router-dom'
 
 const DotaTable = () => {
   let url = 'https://api.opendota.com/api/heroStats'
 
   const [heroList, loading, error] = useDataFetch(url)
+  const history = useHistory()
 
   function image_url(value) {
     return 'https://api.opendota.com' + value
@@ -15,20 +17,25 @@ const DotaTable = () => {
     return winrate.toFixed(2)
   }
 
-  function getHeroesDuration(value) {
-    const id = Number(value)
-    fetch(`https://api.opendota.com/api/heroes/${id}/durations`)
-    .then(response => response.json())
-    .then(duration => {
-      console.log(duration)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  // function getHeroesDuration(value) {
+  //   const id = Number(value)
+  //   fetch(`https://api.opendota.com/api/heroes/${id}/durations`)
+  //   .then(response => response.json())
+  //   .then(duration => {
+  //     console.log(duration)
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //   })
+  // }
+
+  const heroDetail = (value) => {
+    history.push({pathname: `/heroes/${value.id}`, state: {hero:value}})
+    console.log(value)
   }
 
   return (
-    <div>
+    <div className="App">
       {loading && <p>Loading....</p>}
       {error && <p>Error nih... {error}</p>}
       <table border='1'>
@@ -51,12 +58,10 @@ const DotaTable = () => {
                   <td>{ hero.localized_name }</td>
                   <td>{ hero.primary_attr }</td>
                   <td>{ hero.attack_type }</td>
-                  {/* <td><img src={`https://api.opendota.com${hero.icon}`} alt="icon"></img> </td> */}
                   <td><img src={image_url(hero.icon)} alt='icon'></img></td>
-                  {/* <td>{ (hero.pro_win/hero.pro_pick * 100).toFixed(2) }%</td> */}
                   <td>{ winrate(hero.pro_win, hero.pro_pick) }%</td>
-                  <td><button onClick={() => getHeroesDuration(hero.id)}
-                  >Duration Played</button> </td>
+                  <td><button onClick={() => heroDetail(hero)}
+                  >Show Detail</button> </td>
                 </tr>
               )
             })}
