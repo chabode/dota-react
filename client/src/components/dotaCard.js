@@ -1,7 +1,7 @@
 import React from 'react'
 
 const DotaCard = (props) => {
-    console.log(props)
+    // console.log(props)
     const {id, localized_name, img, 
             base_agi, base_str, base_int, roles} = props.hero
     return (

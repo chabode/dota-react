@@ -9,8 +9,6 @@ const Navbar = (props) => {
                 <Link className="App-link" to="/">Home</Link> |
                 <Link className="App-link" to="/favourite">Favourite</Link> |
             </nav>
-            <h3>Dota Heroes List</h3>
-            {props.children}
         </div>
     )
 }

@@ -36,6 +36,7 @@ const DotaTable = () => {
 
   return (
     <div className="App">
+      <h2>Dota Heroes List</h2>
       {loading && <p>Loading....</p>}
       {error && <p>Error nih... {error}</p>}
       <table border='1'>
