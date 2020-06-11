@@ -1,8 +1,9 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 
-const FavouriteList = () => {
-    const favList = useSelector(state => state.favList)
+const FavouriteList = (props) => {
+    
+    const {favList} = props
     return (
         <>
         <h3>Favourite Heroes</h3>
@@ -19,7 +20,7 @@ const FavouriteList = () => {
             <tbody>
             {favList.map((favHero) => {
                 return (
-                    <tr>
+                    <tr key={favHero.id}>
                         <td><img src={`https://api.opendota.com${favHero.img}`} alt="heroes"></img></td>
                         <td>{favHero.localized_name}</td>
                         <td>{favHero.attack_type}</td>
@@ -33,4 +34,9 @@ const FavouriteList = () => {
     )
 }
 
-export default FavouriteList
+const mapStateToProps = (state) => {
+    return {
+        favList: state.favouriteReducer.favList
+    }
+}
+export default connect(mapStateToProps, null)( FavouriteList)

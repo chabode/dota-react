@@ -1,27 +1,23 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import DotaCard from '../components/dotaCard'
-import { useDispatch } from 'react-redux'
+import { addFavList } from '../store/actions/favouriteAction'
+import { connect } from 'react-redux'
 
-const HeroDetail = ({match}) => {
+const HeroDetail = (props) => {
     const location = useLocation()
     
-    // const {id, localized_name, img, base_agi, base_str, base_int} = location.state.hero
-    const {hero} = location.state
-
-    const dispatch = useDispatch()
+    // const {hero} = location.state
+    const { state : {hero}} = location
 
     const clickButton = () => {
-        dispatch({
-            type: 'ADD_FAVLIST',
-            newFavList: hero
-        })
-        console.log('Cek aja gan isinya apa >', hero)
+        props.addFavList(hero)
+        console.log('Added to favourite > ', hero)
     }
 
     return (
         <>
-        {/* <p>Tes aja {match.params.id}</p> */}
+        <h4>Detailed Heroes Info</h4>
         <DotaCard hero={hero}>
             <button onClick={clickButton}>Add to Favourite</button>
         </DotaCard>
@@ -29,4 +25,8 @@ const HeroDetail = ({match}) => {
     )
 }
 
-export default HeroDetail
+const mapDispatchToProps = {
+    addFavList
+}
+
+export default connect(null, mapDispatchToProps)( HeroDetail)

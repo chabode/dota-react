@@ -1,12 +1,16 @@
-import React from 'react';
-import useDataFetch from '../hooks/dataFetch';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { setHeroes } from '../store/actions/heroAction'
 
-const DotaTable = () => {
-  let url = 'https://api.opendota.com/api/heroStats'
-
-  const [heroList, loading, error] = useDataFetch(url)
+const DotaTable = (props) => {
+  
   const history = useHistory()
+  
+  useEffect( () => {
+    props.setHeroes()
+    //eslint-disable-next-line
+  },[])
 
   function image_url(value) {
     return 'https://api.opendota.com' + value
@@ -17,28 +21,18 @@ const DotaTable = () => {
     return winrate.toFixed(2)
   }
 
-  // function getHeroesDuration(value) {
-  //   const id = Number(value)
-  //   fetch(`https://api.opendota.com/api/heroes/${id}/durations`)
-  //   .then(response => response.json())
-  //   .then(duration => {
-  //     console.log(duration)
-  //   })
-  //   .catch(err => {
-  //     console.log(err)
-  //   })
-  // }
-
   const heroDetail = (value) => {
     history.push({pathname: `/heroes/${value.id}`, state: {hero:value}})
     console.log(value)
   }
 
+  const { heroList } = props
+  
   return (
-    <div className="App">
+    <>
       <h2>Dota Heroes List</h2>
-      {loading && <p>Loading....</p>}
-      {error && <p>Error nih... {error}</p>}
+      {/* {loading && <p>Loading....</p>}
+      {error && <p>Error nih... {error}</p>} */}
       <table border='1'>
         <thead>
           <tr>
@@ -68,8 +62,19 @@ const DotaTable = () => {
             })}
         </tbody>
       </table>
-    </div>
+
+    </>
   )
 }
 
-export default DotaTable
+const mapStateToProps = (state) => {
+  return {
+    heroList: state.heroReducer.heroList
+  }
+}
+
+const mapDispatchToProps = {
+  setHeroes
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DotaTable)

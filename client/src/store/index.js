@@ -1,24 +1,14 @@
-import { createStore } from 'redux'
+import { createStore, combineReducers, applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
+import heroReducer from './reducers/heroReducer'
+import favouriteReducer from './reducers/favouriteReducer'
 
-const defaultState = {
-    favList: [
-        
-    ]
-}
 
-const reducer = (state=defaultState, action) => {
-    switch (action.type) {
-        case 'ADD_FAVLIST':
-            return {
-                ...state,
-                favList: state.favList.concat(action.newFavList)
-            }
-    
-        default:
-            return state
-    }
-}
+const reducer = combineReducers({
+    heroReducer,
+    favouriteReducer
+})
 
-const store = createStore(reducer)
+const store = createStore(reducer, applyMiddleware(thunk))
 
 export default store
