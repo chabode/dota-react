@@ -3,6 +3,10 @@ import { useLocation } from 'react-router-dom'
 import DotaCard from '../components/dotaCard'
 import { addFavList } from '../store/actions/favouriteAction'
 import { connect } from 'react-redux'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const mySwal = withReactContent(Swal)
 
 const HeroDetail = (props) => {
     const location = useLocation()
@@ -11,6 +15,7 @@ const HeroDetail = (props) => {
     const { state : {hero}} = location
 
     const clickButton = () => {
+        mySwal.fire('Success','Added to Favourite List','success')
         props.addFavList(hero)
         console.log('Added to favourite > ', hero)
     }
