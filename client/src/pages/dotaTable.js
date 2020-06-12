@@ -30,10 +30,8 @@ const DotaTable = (props) => {
   
   return (
     <>
-      <h2>Dota Heroes List</h2>
-      {/* {loading && <p>Loading....</p>}
-      {error && <p>Error nih... {error}</p>} */}
-      <table border='1'>
+      <h2 data-testid='heroes-dota'>Dota Heroes List</h2>
+      <table border='1' data-testid='table-dota'>
         <thead>
           <tr>
             <th>No</th>

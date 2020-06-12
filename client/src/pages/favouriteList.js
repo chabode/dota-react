@@ -6,10 +6,10 @@ const FavouriteList = (props) => {
     const {favList} = props
     return (
         <>
-        <h3>Favourite Heroes</h3>
-        {favList.length === 0 && <p>No Favourite Hero Detected</p>}
+        <h3 data-testid="favList">Favourite Heroes</h3>
+        {favList.length === 0 && <p data-testid="no-fav-list">No Favourite Hero Detected</p>}
         {favList.length > 0 && 
-        <table border="1">
+        <table border="1" data-testid="table-hero-fav">
             <thead>
                 <tr>
                     <th>Heroes</th>
